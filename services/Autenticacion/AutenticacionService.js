@@ -1,21 +1,26 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import Response from "../../utils/Response.js";
+import Usuario from "../../models/Autenticacion/Usuario.js"
 
 class AutenticacionService {
-    async perfiles_usuario(username){
-        try{
-            const perfiles = []
-        
-            return Response.success("Perfiles Obtenidos", perfiles, 200)
-        }catch(error){
-            return Response.internalServerError(error?.message || "Error al obtener los perfiles", error?.error || error?.message);
-        }
-    }
-    
-    async login(username, password, perfil_id){
+    async login(username, password){
         try {
-            const token = '';
+            const user = await Usuario.findOne({ where: { username, estado: 'A' } });
+            if (!user) {
+                throw new Error('Usuario no encontrado');
+            }
+        
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                throw new Error('Contraseña incorrecta');
+            }
+
+            const token = jwt.sign(
+                { id_usuario: user.id_usuario, email: user.email, username: user.username },
+                process.env.JWT_SECRET,
+                { expiresIn: '3h' }
+            );
 
             return Response.success("Login Exitoso", token, 201);
         } catch (error) {
@@ -23,9 +28,21 @@ class AutenticacionService {
         }
     };
     
-    async register(username, email, password, perfiles){
+    async register(username, email, password){
         try {
-            const newUser = {};
+            const existingUser = await Usuario.findOne({ where: { username, estado: 'A' } });
+            if (existingUser) {
+                throw new Error('El usuario ya existe');
+            }
+        
+            const newUser = await Usuario.create({
+                username,
+                email,
+                password,
+                estado: 'A'
+            });
+        
+            await newUser.save();
         
             return Response.success("Registro Exitoso", newUser, 201);
         }catch (error) {

@@ -1,0 +1,33 @@
+# Directorios de Node
+node_modules/
+dist/
+build/
+package-lock.json
+
+# Archivos de logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Entorno y configuración local
+.env
+.env.*
+.DS_Store # macOS
+Thumbs.db # Windows
+npm-shrinkwrap.json
+
+# Archivos generados por el sistema operativo
+.DS_Store
+.vscode/ # Configuración de VS Code (opcional, pero a menudo se ignora)
+
+# IDEs y editores
+.idea/ # Directorios de WebStorm/IntelliJ
+*.iml
+
+# Archivos de cache
+.npm/
+.nyc_output/
+.temp/
+.cache/
+.eslintcache

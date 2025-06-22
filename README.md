@@ -5,7 +5,7 @@ Una vez clonado el proyecto desde GitHub, debe seguir los siguientes pasos:
 
 1. Ejecutar el comando: npm i, esto instalará las dependencias necesarias para el correcto funcionamiento del proyecto
 
-2. Debe crear un archivo .env tomando como ejemplo el archivo: .example.env Debe incluir lo siguiente: 
+2. Debe crear un archivo .env tomando como ejemplo el archivo: .example.env Deben incluirse las siguientes variables: 
     - DB_NAME: corresponde al nombre de la BD
     - DB_HOST: corresponde a la ip o hosting donde esta alojado la DB
     - DB_PORT: corresponde al puerto donde se encuntra levantado la DB

@@ -21,7 +21,7 @@ const createApp = () => {
     app.disable('x-powered-by');
 
     app.use(cors({
-        origin: 'http://192.168.100.61:3000',
+        origin: 'http://192.168.100.61:3000', //Colocar IP y puerto donde está levantado el frontend
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         allowedHeaders: ['Content-Type', 'Authorization']
     }));

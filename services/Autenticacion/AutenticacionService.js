@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import Response from "../../utils/Response.js";
-import Usuario from "../../models/Usuario/Usuario.js"
+import { Usuario } from '../../models/index.js';
 
 class AutenticacionService {
     async login(email, password){

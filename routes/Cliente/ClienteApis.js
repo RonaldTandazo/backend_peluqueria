@@ -11,5 +11,6 @@ const asyncHandler = (fn) => (req, res, next) => {
 ClienteApis.get('/all', asyncHandler(clienteController.getClientes.bind(clienteController)));
 ClienteApis.post('/store', asyncHandler(clienteController.store.bind(clienteController)));
 ClienteApis.put('/update/:id_cliente', asyncHandler(clienteController.update.bind(clienteController)));
+ClienteApis.delete('/delete/:id_cliente', asyncHandler(clienteController.delete.bind(clienteController)));
 
 export default ClienteApis;

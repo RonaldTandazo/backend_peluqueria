@@ -23,7 +23,7 @@ class ClienteController {
             console.log(error)
             return res.status(error?.statusCode || 500).json({
                 ok: error?.ok || false,
-                message: error?.message || "Error en Login",
+                message: error?.message || "Error al obtener clientes",
                 error: error?.error
             });
         }
@@ -82,7 +82,29 @@ class ClienteController {
             console.log(error)
             return res.status(error?.statusCode || 500).json({
                 ok: error?.ok || false,
-                message: error?.message || "Error al Guardar Cliente",
+                message: error?.message || "Error al Actualizar Cliente",
+                error: error?.error
+            });
+        }
+    };
+
+    async delete(req, res){
+        try {
+            const { id_cliente: id_cliente } = req.params            
+            
+            const remove = await this.clienteService.delete(id_cliente);
+            if(!remove.ok) throw remove
+
+            return res.status(remove?.statusCode).json({
+                ok: remove?.ok,
+                message: remove?.message,
+                data: remove?.data
+            })
+        } catch (error) {
+            console.log(error)
+            return res.status(error?.statusCode || 500).json({
+                ok: error?.ok || false,
+                message: error?.message || "Error al Eliminar Cliente",
                 error: error?.error
             });
         }

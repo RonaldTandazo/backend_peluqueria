@@ -7,6 +7,10 @@ import { setupSocket } from './socket.js';
 import cors from 'cors';
 import AutenticacionApis from './routes/Autenticacion/AutenticacionApis.js';
 import ClienteApis from './routes/Cliente/ClienteApis.js';
+import CitaApis from './routes/Cita/CitaApis.js';
+import ServicioApis from './routes/Servicio/ServicioApis.js';
+import AtencionesApis from './routes/Atencion/AtencionApis.js';
+
 dotenv.config();
 
 const createApp = () => {
@@ -25,6 +29,9 @@ const createApp = () => {
     app.get('/', (req, res) => res.send('¡Backend activo!'));
     app.use('/api/auth', AutenticacionApis);
     app.use('/api/clientes', ClienteApis);
+    app.use('/api/citas', CitaApis);
+    app.use('/api/servicios', ServicioApis);
+    app.use('/api/atenciones', AtencionesApis);
 
     return app;
 };

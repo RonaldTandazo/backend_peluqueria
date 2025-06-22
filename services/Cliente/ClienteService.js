@@ -1,5 +1,5 @@
 import Response from "../../utils/Response.js";
-import Cliente from "../../models/Cliente/Cliente.js"
+import { Cliente } from '../../models/index.js';
 import { Op } from "sequelize";
 
 class ClienteService {
@@ -41,7 +41,7 @@ class ClienteService {
             return Response.success("Clientes Obtenidos", data, 201);
         } catch (error) {
             console.log(error)
-            return Response.error(error?.message || "Error en el login", error?.error || error?.message);
+            return Response.error(error?.message || "Error al obtener clientes", error?.error || error?.message);
         }
     };
     
@@ -49,7 +49,7 @@ class ClienteService {
         try {
             const cliente = await Cliente.findOne({ where: { identificacion, estado: 'A' } });
             if (cliente) {
-                throw new Error('El cliente ya está registrado');
+                throw new Error('Ya ahi un cliente con esa identificación');
             }
 
             const newCliente = await Cliente.create({
@@ -86,10 +86,27 @@ class ClienteService {
             cliente.email = email;
             await cliente.save();
         
-            return Response.success("Información Actualizada", cliente, 201);
+            return Response.success("Información Actualizada", null, 201);
         }catch (error) {
             console.log(error)
             return Response.error(error?.message || "Error al Actualizar", error?.error || error?.message);
+        }
+    };
+
+    async delete(id_cliente){
+        try {
+            const cliente = await Cliente.findOne({ where: { id_cliente } });
+            if (!cliente) {
+                throw new Error('El cliente no está registrado');
+            }
+
+            cliente.estado = 'E';
+            await cliente.save();
+        
+            return Response.success("Cliente Eliminado", null, 201);
+        }catch (error) {
+            console.log(error)
+            return Response.error(error?.message || "Error al Eliminar", error?.error || error?.message);
         }
     };
 }

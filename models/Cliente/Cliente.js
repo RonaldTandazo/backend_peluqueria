@@ -17,12 +17,11 @@ const Cliente = sequelize.define('Cliente', {
     },
     identificacion: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
+        allowNull: false
     },
     telefono: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
     },
     direccion: {
         type: DataTypes.STRING,
@@ -30,8 +29,7 @@ const Cliente = sequelize.define('Cliente', {
     },
     email: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
+        allowNull: false
     },
     estado: {
         type: DataTypes.ENUM('A', 'I', 'E'),

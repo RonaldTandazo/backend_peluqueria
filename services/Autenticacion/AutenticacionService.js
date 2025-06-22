@@ -1,12 +1,12 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import Response from "../../utils/Response.js";
-import Usuario from "../../models/Autenticacion/Usuario.js"
+import Usuario from "../../models/Usuario/Usuario.js"
 
 class AutenticacionService {
-    async login(username, password){
+    async login(email, password){
         try {
-            const user = await Usuario.findOne({ where: { username, estado: 'A' } });
+            const user = await Usuario.findOne({ where: { email, estado: 'A' } });
             if (!user) {
                 throw new Error('Usuario no encontrado');
             }
@@ -30,11 +30,11 @@ class AutenticacionService {
     
     async register(username, email, password){
         try {
-            const existingUser = await Usuario.findOne({ where: { username, estado: 'A' } });
-            if (existingUser) {
-                throw new Error('El usuario ya existe');
+            const user = await Usuario.findOne({ where: { email, estado: 'A' } });
+            if (user) {
+                throw new Error('El usuario ya está registrado');
             }
-        
+
             const newUser = await Usuario.create({
                 username,
                 email,
@@ -47,6 +47,19 @@ class AutenticacionService {
             return Response.success("Registro Exitoso", newUser, 201);
         }catch (error) {
             return Response.error(error?.message || "Error al Registrar", error?.error || error?.message);
+        }
+    };
+
+    async verifyEmail(email){
+        try {
+            const user = await Usuario.findOne({ where: { email, estado: 'A' } });
+            if (user) {
+                throw new Error('Email ya registrado');
+            }
+
+            return Response.success("Email no registrado", user, 201);
+        } catch (error) {
+            return Response.error(error?.message || "Error al verificar Email", error?.error || error?.message);
         }
     };
 }

@@ -7,12 +7,11 @@ class AutenticacionController {
     
     async login(req, res){
         try {
-            const { username, password } = req.body;
-
-            if (!username) throw new Error("El Usuario es requerido");
-            if (!password) throw new Error("La clave es requerido")
+            const { email, password } = req.body;
+            if (!email) throw new Error("El email es requerido");
+            if (!password) throw new Error("La contraseña es requerido")
             
-            const token = await this.autenticacionService.login(username, password);
+            const token = await this.autenticacionService.login(email.toLowerCase(), password);
             if(!token.ok) throw token
 
             return res.status(token?.statusCode).json({
@@ -32,11 +31,11 @@ class AutenticacionController {
     async register(req, res){
         try {
             const { username, email, password } = req.body;
-            if (!username) throw new Error("El Usuario es requerido");
+            if (!username) throw new Error("El usuario es requerido");
             if (!email) throw new Error("El email es requerido")
-            if (!password) throw new Error("La clave es requerido")
+            if (!password) throw new Error("La contraseña es requerido")
             
-            const newUser = await this.autenticacionService.register(username, email, password);
+            const newUser = await this.autenticacionService.register(username.toUpperCase(), email.toLowerCase(), password);
             if(!newUser.ok) throw newUser
 
             return res.status(newUser?.statusCode).json({
@@ -48,6 +47,28 @@ class AutenticacionController {
             return res.status(error?.statusCode || 500).json({
                 ok: error?.ok || false,
                 message: error?.message || "Error al Registrar",
+                error: error?.error
+            });
+        }
+    };
+    
+    async verifyEmail(req, res){
+        try {
+            const { email } = req.body;
+            if (!email) throw new Error("El email es requerido");
+
+            const verify = await this.autenticacionService.verifyEmail(email.toLowerCase());
+            if(!verify.ok) throw verify
+
+            return res.status(verify?.statusCode).json({
+                ok: verify?.ok,
+                message: verify?.message,
+                data: verify?.data
+            })
+        } catch (error) {
+            return res.status(error?.statusCode || 500).json({
+                ok: error?.ok || false,
+                message: error?.message || "Error al Verificar Email",
                 error: error?.error
             });
         }

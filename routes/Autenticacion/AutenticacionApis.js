@@ -10,5 +10,6 @@ const asyncHandler = (fn) => (req, res, next) => {
 
 AutenticacionApis.post('/login', asyncHandler(autenticacionController.login.bind(autenticacionController)));
 AutenticacionApis.post('/register', asyncHandler(autenticacionController.register.bind(autenticacionController)));
+AutenticacionApis.post('/verifyEmail', asyncHandler(autenticacionController.verifyEmail.bind(autenticacionController)));
 
 export default AutenticacionApis;

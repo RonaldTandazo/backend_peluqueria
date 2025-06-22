@@ -20,4 +20,4 @@ Una vez clonado el proyecto desde GitHub, debe seguir los siguientes pasos:
 
 3. En la carpeta raíz del proyecto se encuentra el archivo index.js, dentro del archivo en la línea 24 debe colocarse la IP y Puerto en el cual se encuentra levantado el proyecto del frontend, esto es requerido debido a los conflictos generados por CORS
 
-4. Una vez realizados todos los pasos anteriores debe ejecutar el siguiente comando en la terminal: npm run serve, esto levantará el proyecto en su ip local en el puerto de la variable PORT indicado en el archivo .env
+4. Una vez realizados todos los pasos anteriores debe ejecutar el siguiente comando en la terminal: npm run serve, esto levantará el proyecto en su ip local utilizando el puerto indicado en la variable PORT del archivo .env

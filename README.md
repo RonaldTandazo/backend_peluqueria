@@ -3,7 +3,7 @@
 Este proyecto utiliza MySQL como Base de Datos
 Una vez clonado el proyecto desde GitHub, debe seguir los siguientes pasos:
 
-1. Ejecutar el comando: npm i Esto instalará la dependencias necesarias para el correcto funcionamiento del proyecto
+1. Ejecutar el comando: npm i, esto instalará las dependencias necesarias para el correcto funcionamiento del proyecto
 
 2. Debe crear un archivo .env tomando como ejemplo el archivo: .example.env Debe incluir lo siguiente: 
     - DB_NAME: corresponde al nombre de la BD

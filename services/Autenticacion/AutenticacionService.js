@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import Response from "../../utils/Response.js";
-import { Cliente, Usuario } from '../../models/index.js';
+import { Cliente, Usuario, Login } from '../../models/index.js';
 
 class AutenticacionService {
     async login(email, password){
@@ -15,6 +15,12 @@ class AutenticacionService {
             if (!isMatch) {
                 throw new Error('Contraseña incorrecta');
             }
+
+            const newLogin = await Login.create({
+                id_usuario: user.id_usuario,
+                fecha: new Date()
+            });
+            await newLogin.save();
 
             const token = jwt.sign(
                 { id_usuario: user.id_usuario, email: user.email, username: user.username },

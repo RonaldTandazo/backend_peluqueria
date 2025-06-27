@@ -4,6 +4,7 @@ import Cliente from './Cliente/Cliente.js';
 import Usuario from './Usuario/Usuario.js';
 import Servicio from './Servicio/Servicio.js';
 import Atencion from './Atencion/Atencion.js';
+import Login from './Login/Login.js';
 
 // Atencion
 Atencion.belongsTo(Cita, { foreignKey: 'id_cita', as: "cita"});
@@ -23,5 +24,6 @@ export {
     Cita,
     Cliente,
     Usuario,
-    Servicio
+    Servicio,
+    Login
 };

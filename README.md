@@ -24,3 +24,6 @@ Una vez clonado el proyecto desde GitHub, debe seguir los siguientes pasos:
 
 Nota:
 Debe asegurarse que no haya otro proyecto levantado en el puerto indicado en la variable PORT del archivo .env, caso contrario el proyecto será levantado en un puerto distinto y de ser ese el caso deberá ajustar el puerto del la variable VUE_APP_URL en el archivo .env.development.local del frontend, ya que a esa url y puerto se apunto desde el frontend para conectarse al backend
+
+Nota:
+Por favor bajar los cambios realizados ejecutando: git pull origin main en la terminal de este proyecto

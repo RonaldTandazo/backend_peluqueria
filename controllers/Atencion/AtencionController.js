@@ -31,14 +31,14 @@ class AtencionController {
     
     async store(req, res){
         try {
-            const { data_atencion, id_usuario } = req.body;
+            const { data_atencion } = req.body;
             const { id_cita, id_servicio, precio } = data_atencion;
 
             if (!id_cita) throw new Error("Debe indicar la cita");
             if (!id_servicio) throw new Error("La servicio es requerido")
             if (!precio) throw new Error("El precio del servicio requerida")
             
-            const newAtencion = await this.atencionService.store(id_cita, id_servicio, precio, id_usuario);
+            const newAtencion = await this.atencionService.store(id_cita, id_servicio, precio);
             if(!newAtencion.ok) throw newAtencion
 
             return res.status(newAtencion?.statusCode).json({

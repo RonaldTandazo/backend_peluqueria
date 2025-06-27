@@ -10,6 +10,7 @@ import ClienteApis from './routes/Cliente/ClienteApis.js';
 import CitaApis from './routes/Cita/CitaApis.js';
 import ServicioApis from './routes/Servicio/ServicioApis.js';
 import AtencionesApis from './routes/Atencion/AtencionApis.js';
+import ReporteApis from './routes/Reporte/ReporteApis.js';
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ const createApp = () => {
     app.use('/api/citas', CitaApis);
     app.use('/api/servicios', ServicioApis);
     app.use('/api/atenciones', AtencionesApis);
+    app.use('/api/reportes', ReporteApis);
 
     return app;
 };

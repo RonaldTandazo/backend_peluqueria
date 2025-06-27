@@ -27,14 +27,6 @@ const Atencion = sequelize.define('Atencion', {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false
     },
-    id_usuario: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'usuarios',
-            key: 'id_usuario'
-        }
-    },
     estado: {
         type: DataTypes.ENUM('A', 'I', 'E'),
         allowNull: false,

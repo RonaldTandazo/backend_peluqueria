@@ -16,12 +16,6 @@ class CitaService {
                         as: 'clienteCita',
                         attributes: [],
                         required: true
-                    },
-                    {
-                        model: Usuario,
-                        as: 'agendadaPor',
-                        attributes: [],
-                        required: true
                     }
                 ],
                 attributes: {
@@ -29,8 +23,7 @@ class CitaService {
                         [
                             Sequelize.fn('CONCAT', Sequelize.col('clienteCita.nombre'), ' ', Sequelize.col('clienteCita.apellido')),
                             'cliente'
-                        ],
-                        [Sequelize.col('agendadaPor.username'), 'usuario']
+                        ]
                     ]
                 },
                 order: [
@@ -54,9 +47,9 @@ class CitaService {
         }
     };
     
-    async store(id_cliente, fecha, hora, id_usuario){
+    async store(id_cliente, fecha, hora){
         try {
-            const cita = await Cita.findOne({ where: { id_cliente, fecha, hora, estado: 'A' } });
+            const cita = await Cita.findOne({ where: { id_cliente, fecha, hora, estado: 'Agendada' } });
             if (cita) {
                 throw new Error('Ya hay una cita registrada para este cliente en esta fecha y hora');
             }
@@ -65,7 +58,6 @@ class CitaService {
                 id_cliente,
                 fecha,
                 hora,
-                id_usuario,
                 estado: 'Agendada'
             });
         
@@ -86,7 +78,7 @@ class CitaService {
             }
 
             cita.id_cliente = id_cliente;
-            cita.nombre = fecha;
+            cita.fecha = fecha;
             cita.hora = hora;
             cita.estado = estado;
             await cita.save();
@@ -112,6 +104,17 @@ class CitaService {
         }catch (error) {
             console.log(error)
             return Response.error(error?.message || "Error al Eliminar", error?.error || error?.message);
+        }
+    };
+
+    async getCitasByCliente(id_cliente){
+        try {
+            const citas = await Cita.findAll({ where: { id_cliente } });
+
+            return Response.success("Citas Obtenidos", citas, 201);
+        } catch (error) {
+            console.log(error)
+            return Response.error(error?.message || "Error al obtener citas", error?.error || error?.message);
         }
     };
 }

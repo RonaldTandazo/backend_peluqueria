@@ -22,18 +22,11 @@ class AtencionService {
                         as: 'servicioCita',
                         attributes: [],
                         required: true
-                    },
-                    {
-                        model: Usuario,
-                        as: 'ingresadoPor',
-                        attributes: [],
-                        required: true
                     }
                 ],
                 attributes: {
                     include: [
-                        [Sequelize.col('servicioCita.descripcion'), 'servicio'],
-                        [Sequelize.col('ingresadoPor.username'), 'usuario']
+                        [Sequelize.col('servicioCita.descripcion'), 'servicio']
                     ]
                 }
             });
@@ -53,13 +46,12 @@ class AtencionService {
         }
     };
     
-    async store(id_cita, id_servicio, precio, id_usuario){
+    async store(id_cita, id_servicio, precio){
         try {
             const newAtencion= await Atencion.create({
                 id_cita,
                 id_servicio,
                 precio,
-                id_usuario,
                 estado: 'A'
             });
         

@@ -31,13 +31,13 @@ class CitaController {
     
     async store(req, res){
         try {
-            const { data_cita, id_usuario } = req.body;
+            const { data_cita } = req.body;
             const { id_cliente, fecha, hora } = data_cita;
             if (!id_cliente) throw new Error("El cliente es requerido");
             if (!fecha) throw new Error("La fecha de la cita es requerida")
             if (!hora) throw new Error("El hora de la cita es requerida")
             
-            const newCita = await this.citaService.store(id_cliente, fecha, hora, id_usuario);
+            const newCita = await this.citaService.store(id_cliente, fecha, hora);
             if(!newCita.ok) throw newCita
 
             return res.status(newCita?.statusCode).json({
@@ -58,8 +58,7 @@ class CitaController {
     async update(req, res){
         try {
             const { id_cita: id_cita } = req.params
-            const { id_cliente, fecha, hora, estado } = req.body;            
-
+            const { id_cliente, fecha, hora, estado } = req.body;
             if (!id_cliente) throw new Error("El cliente es requerido");
             if (!fecha) throw new Error("La fecha de la cita es requerida")
             if (!hora) throw new Error("El hora de la cita es requerida")
@@ -100,6 +99,29 @@ class CitaController {
             return res.status(error?.statusCode || 500).json({
                 ok: error?.ok || false,
                 message: error?.message || "Error al Eliminar Cita",
+                error: error?.error
+            });
+        }
+    };
+
+    async getCitasByCliente(req, res){
+        try {
+
+            const {  id_cliente: id_cliente } = req.params;
+        
+            const citas = await this.citaService.getCitasByCliente(id_cliente);
+            if(!citas.ok) throw citas
+
+            return res.status(citas?.statusCode).json({
+                ok: citas?.ok,
+                message: citas?.message,
+                data: citas?.data
+            })
+        } catch (error) {
+            console.log(error)
+            return res.status(error?.statusCode || 500).json({
+                ok: error?.ok || false,
+                message: error?.message || "Error al Obtener Citas",
                 error: error?.error
             });
         }

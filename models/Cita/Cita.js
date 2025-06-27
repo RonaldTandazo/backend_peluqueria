@@ -23,14 +23,6 @@ const Cita = sequelize.define('Cita', {
         type: DataTypes.TIME,
         allowNull: false
     },
-    id_usuario: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'usuarios',
-            key: 'id_usuario'
-        }
-    },
     estado: {
         type: DataTypes.ENUM('Agendada', 'En Proceso', 'Completada', 'Cancelada', 'No Asistió'),
         allowNull: false,

@@ -12,5 +12,6 @@ CitaApis.get('/all', asyncHandler(citaController.getCitas.bind(citaController)))
 CitaApis.post('/store', asyncHandler(citaController.store.bind(citaController)));
 CitaApis.put('/update/:id_cita', asyncHandler(citaController.update.bind(citaController)));
 CitaApis.delete('/delete/:id_cita', asyncHandler(citaController.delete.bind(citaController)));
+CitaApis.get('/clientes/:id_cliente', asyncHandler(citaController.getCitasByCliente.bind(citaController)));
 
 export default CitaApis;

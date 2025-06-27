@@ -20,6 +20,7 @@ class AutenticacionController {
                 data: token?.data
             })
         } catch (error) {
+            console.log(error);
             return res.status(error?.statusCode || 500).json({
                 ok: error?.ok || false,
                 message: error?.message || "Error en Login",
@@ -30,12 +31,14 @@ class AutenticacionController {
     
     async register(req, res){
         try {
-            const { username, email, password } = req.body;
+            const { username, nombre, apellido, email, password } = req.body;
             if (!username) throw new Error("El usuario es requerido");
+            if (!nombre) throw new Error("El nombre es requerido");
+            if (!apellido) throw new Error("El apellido es requerido");
             if (!email) throw new Error("El email es requerido")
             if (!password) throw new Error("La contraseña es requerido")
             
-            const newUser = await this.autenticacionService.register(username.toUpperCase(), email.toLowerCase(), password);
+            const newUser = await this.autenticacionService.register(username.toUpperCase(), nombre.toUpperCase(), apellido.toUpperCase(), email.toLowerCase(), password);
             if(!newUser.ok) throw newUser
 
             return res.status(newUser?.statusCode).json({
@@ -44,6 +47,7 @@ class AutenticacionController {
                 data: newUser?.data
             })
         } catch (error) {
+            console.log(error);
             return res.status(error?.statusCode || 500).json({
                 ok: error?.ok || false,
                 message: error?.message || "Error al Registrar",
@@ -66,9 +70,33 @@ class AutenticacionController {
                 data: verify?.data
             })
         } catch (error) {
+            console.log(error);
             return res.status(error?.statusCode || 500).json({
                 ok: error?.ok || false,
                 message: error?.message || "Error al Verificar Email",
+                error: error?.error
+            });
+        }
+    };
+
+    async loginClientes(req, res){
+        try {
+            const { identificacion } = req.body;
+            if (!identificacion) throw new Error("La cedula es requerida");
+            
+            const token = await this.autenticacionService.loginClientes(identificacion);
+            if(!token.ok) throw token
+
+            return res.status(token?.statusCode).json({
+                ok: token?.ok,
+                message: token?.message,
+                data: token?.data
+            })
+        } catch (error) {
+            console.log(error);
+            return res.status(error?.statusCode || 500).json({
+                ok: error?.ok || false,
+                message: error?.message || "Error al validar",
                 error: error?.error
             });
         }

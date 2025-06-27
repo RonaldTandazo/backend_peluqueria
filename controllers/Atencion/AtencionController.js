@@ -1,8 +1,10 @@
 import AtencionServices from "../../services/Atencion/AtencionService.js";
+import CitaService from "../../services/Cita/CitaService.js";
 
 class AtencionController {
     constructor() {
         this.atencionService = new AtencionServices();
+        this.citaService = new CitaService();
     }
     
     async getAtencionesByCita(req, res){
@@ -39,7 +41,10 @@ class AtencionController {
             if (!precio) throw new Error("El precio del servicio requerida")
             
             const newAtencion = await this.atencionService.store(id_cita, id_servicio, precio);
-            if(!newAtencion.ok) throw newAtencion
+            if(!newAtencion.ok) throw newAtencion;
+
+            const updateCostoCita = await this.citaService.updateCostoCita(id_cita, parseFloat(precio), 'suma');
+            if(!updateCostoCita.ok) throw updateCostoCita;
 
             return res.status(newAtencion?.statusCode).json({
                 ok: newAtencion?.ok,
@@ -62,6 +67,9 @@ class AtencionController {
             
             const remove = await this.atencionService.delete(id_atencion);
             if(!remove.ok) throw remove
+
+            const updateCostoCita = await this.citaService.updateCostoCita(remove.data.id_cita, remove.data.precio, 'resta');
+            if(!updateCostoCita.ok) throw updateCostoCita;
 
             return res.status(remove?.statusCode).json({
                 ok: remove?.ok,

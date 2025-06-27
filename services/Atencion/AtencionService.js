@@ -1,6 +1,6 @@
 import Response from "../../utils/Response.js";
 import { Servicio, Usuario, Atencion } from '../../models/index.js';
-import { Sequelize } from 'sequelize';
+import { Sequelize, where } from 'sequelize';
 
 class AtencionService {
     async getAtencionesByCita(filtros, pageNumber, pageSize){
@@ -74,7 +74,7 @@ class AtencionService {
             atencion.estado = 'E';
             await atencion.save();
         
-            return Response.success("Atención Eliminada", null, 201);
+            return Response.success("Atención Eliminada", atencion, 201);
         }catch (error) {
             console.log(error)
             return Response.error(error?.message || "Error al Eliminar", error?.error || error?.message);

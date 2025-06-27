@@ -90,6 +90,28 @@ class CitaService {
         }
     };
 
+    async updateCostoCita(id_cita, precio, tipo){
+        try {
+            const cita = await Cita.findOne({ where: { id_cita } });
+            if (!cita) {
+                throw new Error('No se encontró la cita');
+            }
+
+            if(tipo == 'suma'){
+                cita.costo = cita.costo ? parseFloat(cita.costo) + precio:precio;
+            }else if(tipo == 'resta'){
+                cita.costo = cita.costo - precio;
+            }
+
+            await cita.save();
+        
+            return Response.success("Información Actualizada", null, 201);
+        }catch (error) {
+            console.log(error)
+            return Response.error(error?.message || "Error al Actualizar", error?.error || error?.message);
+        }
+    };
+
     async delete(id_cita){
         try {
             const cita = await Cita.findOne({ where: { id_cita } });

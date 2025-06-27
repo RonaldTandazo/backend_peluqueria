@@ -23,6 +23,10 @@ const Cita = sequelize.define('Cita', {
         type: DataTypes.TIME,
         allowNull: false
     },
+    costo: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: true
+    },
     estado: {
         type: DataTypes.ENUM('Agendada', 'En Proceso', 'Completada', 'Cancelada', 'No Asistió'),
         allowNull: false,
